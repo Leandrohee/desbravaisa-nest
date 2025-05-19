@@ -8,9 +8,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestApiModule } from 'src/test-api/test-api.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  imports: [TestApiModule],
+  imports: [TestApiModule, PrismaModule], //PrismaModule has to be in here to be broadcast
   controllers: [AppController],
   providers: [AppService],
 })
