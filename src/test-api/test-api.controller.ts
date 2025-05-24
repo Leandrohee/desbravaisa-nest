@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { TestApiService } from './test-api.service';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @Controller('test-api')
 export class TestApiController {
@@ -12,6 +13,7 @@ export class TestApiController {
   }
 
   //Route localhost:3000/test-api/cat
+  @UseGuards(JwtGuard)
   @Get('cat')
   getCat() {
     return this.testapiservice.getCat();

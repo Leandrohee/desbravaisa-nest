@@ -305,6 +305,12 @@ export class AuthService {
 }
 ```
 
+The logic for jwt here is this:
+
+1. Use the route /auth/signup to create a user
+2. Use the route /auth/signin to verify if the user is valid
+3. The route /auth/signin automaticly uses the function genToken to generate a new jwt token to the user
+
 # Strategies and Guards (Middlewares)
 
 **Creating a strategy (uses to authenticate the jwt)**

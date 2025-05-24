@@ -15,3 +15,18 @@ export class SignupDto {
 
   lastName?: string;
 }
+
+export class SigninDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
+
+export type GentokenTypes = {
+  codUser: number;
+  email: string;
+};

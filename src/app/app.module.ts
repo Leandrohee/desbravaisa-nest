@@ -9,9 +9,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestApiModule } from 'src/test-api/test-api.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TestApiModule, PrismaModule], //PrismaModule has to be in here to be broadcast
+  imports: [TestApiModule, PrismaModule, AuthModule], //PrismaModule has to be in here to be broadcast
   controllers: [AppController],
   providers: [AppService],
 })

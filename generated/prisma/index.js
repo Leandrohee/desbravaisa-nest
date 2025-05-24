@@ -161,7 +161,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -170,8 +170,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  cod_user  Int      @id @default(autoincrement()) //Identification key, has to be unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  email     String   @unique //email     - Required and unique\n  hash      String //hash      - Required\n  firstName String //firstName - requirad\n  lastName  String? //lastNme   - Optional\n}\n",
-  "inlineSchemaHash": "cf29f993650da67511a3e8e435425fb7f6b09aaa53da31547a2999aafce675e6",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  cod_user  Int      @id @default(autoincrement())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  email     String   @unique\n  hash      String\n  firstName String\n  lastName  String?\n}\n",
+  "inlineSchemaHash": "ffc86b51b8d11da90b9f3e6fa0727d413193e805183f18bccf76bd3b0bf8bd40",
   "copyEngine": true
 }
 

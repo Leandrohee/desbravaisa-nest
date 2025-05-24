@@ -2,12 +2,16 @@
  * File responsible for bussines logic to create a jwt authentication
  */
 
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { SignupDto } from './dto';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { GentokenTypes, SigninDto, SignupDto } from './dto/authPayload.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { PrismaClientKnownRequestError } from 'generated/prisma/runtime/library';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +21,7 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
 
-  /* ------------------------- FUNCTION RELATED TO CREATE A NEW USER IN DB ------------------------ */
+  /* ------------------------- METHOD RELATED TO CREATE A NEW USER IN DB ------------------------ */
   async signup(dto: SignupDto) {
     try {
       //Generating a hash based in the password provided
@@ -29,6 +33,8 @@ export class AuthService {
         data: {
           email: dto.email,
           hash: hash,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
         },
       });
 
@@ -47,6 +53,78 @@ export class AuthService {
     }
   }
 
-  /* ---------------------- FUNCTION RELATED TO AUTHENTICATED A EXISTENT USER --------------------- */
-  signin() {}
+  /* ---------------------- METHOD RELATED TO AUTHENTICATED A EXISTENT USER --------------------- */
+  async signin(dto: SigninDto) {
+    try {
+      //Verify is the user exists
+      const user = await this.prisma.user.findUnique({
+        where: {
+          email: dto.email,
+        },
+      });
+      if (!user) throw new Error('Credentials invalid');
+
+      //Verify the password
+      const isPasswordValid = await bcrypt.compare(dto.password, user.hash);
+      if (!isPasswordValid) throw new Error('Credentials invalid');
+
+      //Generating the token using the gentoken function
+      return this.gentoken({
+        email: user.email,
+        codUser: user.cod_user,
+      });
+    } catch (error) {
+      // throw new ForbiddenException(error.message); //Error 403 -> Server know who i'm
+      throw new UnauthorizedException(error.message); //Error 401 -> Server dont know who i'm
+    }
+  }
+
+  /* -------------------------- METHOD RELATED TO GENERATE A JWT TOKEN -------------------------- */
+  private async gentoken({
+    email,
+    codUser,
+  }: GentokenTypes): Promise<{ access_token: string }> {
+    const payload = {
+      sub: codUser, //sub is a convention name in Jwt for a unique value, in this case the user id
+      email: email,
+    };
+
+    try {
+      //Loading the jwt secret from the env
+      const jwtSecret = process.env.JWT_SECRET;
+      if (!jwtSecret) throw new Error('Secret not found!');
+
+      //Generating and storing the jwt token
+      const token = await this.jwt.signAsync(payload, {
+        secret: jwtSecret,
+        expiresIn: '1h',
+      });
+
+      //Returning the generate token
+      return { access_token: token };
+    } catch (error) {
+      throw new ForbiddenException(error.message);
+    }
+  }
 }
+
+/**
+ * Testing this on insomnia:
+ * 
+ * E.G: auth/signup
+ * 
+ * Route: http://localhost:3000/auth/signup
+ * 
+ * Params: body ->
+ * 
+ * {
+    "email": "leandrohenrique_@live.com",
+    "password": "123",
+    "firstName": "Leandro",
+    "lastName": "Torres"
+  }
+
+  The quotation marks has to be doubled and not simplet 
+  ✅ ""
+  ❌ ''
+ */
