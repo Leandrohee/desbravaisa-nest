@@ -1,6 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SigninDto, SignupDto } from './dto/authPayload.dto';
+import { Request } from 'express';
+import { RefreshJwtGuard } from './guard/refreshjwt.guard';
 
 //Route localhost:3000/auth
 @Controller('auth')
@@ -17,6 +19,13 @@ export class AuthController {
   @Post('signin')
   signin(@Body() dto: SigninDto) {
     return this.authservice.signin(dto); //Login into an account
+  }
+
+  //Route localhost:3000/auth/refresh
+  @UseGuards(RefreshJwtGuard)
+  @Post('refresh')
+  refresh(@Req() req: Request) {
+    return this.authservice.refresh(req);
   }
 }
 

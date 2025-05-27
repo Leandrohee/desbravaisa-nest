@@ -1,7 +1,7 @@
 /* ----- THIS FILE IS RESPONSIBLE FOR VERIFYING THE AUTHENTICITY OF THE TOKEN IN THE HEADERS ----- */
 /* --------------------------- IT WORKS WITH GUARDS TO PROTECT ROUTES --------------------------- */
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  //THis payload como from the jwt
+  //This payload come from the jwt decode
   async validate(payload: ValidateProps): Promise<ValidateProps> {
     //Returning the payload
     return {

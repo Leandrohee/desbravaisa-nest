@@ -30,3 +30,7 @@ export type GentokenTypes = {
   codUser: number;
   email: string;
 };
+
+export class RefreshDto {
+  refreshToken: string;
+}

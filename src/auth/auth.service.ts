@@ -12,6 +12,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaClientKnownRequestError } from 'generated/prisma/runtime/library';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -69,10 +70,20 @@ export class AuthService {
       if (!isPasswordValid) throw new Error('Credentials invalid');
 
       //Generating the token using the gentoken function
-      return this.gentoken({
+      const tokensGenerated = await this.gentoken({
         email: user.email,
         codUser: user.cod_user,
       });
+
+      //Saving the refresh token in the db
+      await this.prisma.user_refresh_token.create({
+        data: {
+          cod_user: user.cod_user,
+          refresh_token: tokensGenerated.refresh_token,
+        },
+      });
+
+      return tokensGenerated;
     } catch (error) {
       // throw new ForbiddenException(error.message); //Error 403 -> Server know who i'm
       throw new UnauthorizedException(error.message); //Error 401 -> Server dont know who i'm
@@ -99,7 +110,7 @@ export class AuthService {
       //Generating and storing the jwt acess_token and refresh_token
       const access_token = await this.jwt.signAsync(payload, {
         secret: jwtSecret,
-        expiresIn: '60s',
+        expiresIn: '1h',
       });
 
       const refresh_token = await this.jwt.signAsync(payload, {
@@ -111,6 +122,27 @@ export class AuthService {
       return { access_token, refresh_token };
     } catch (error) {
       throw new ForbiddenException(error.message);
+    }
+  }
+
+  /* ---------------------------- METHOD TO GENERATE A NEW ACCESS_TOKEN --------------------------- */
+  async refresh(req: Request) {
+    //This payload is coming from refreshjwtstrategy
+    const refreshJwtSecret = process.env.REFRESH_JWT_SECRET;
+    const payload = req.user ?? '';
+
+    try {
+      if (!refreshJwtSecret) throw new Error('Secret not found');
+
+      //Generating and storing the jwt acess_token and refresh_token
+      const access_token = await this.jwt.signAsync(payload, {
+        secret: refreshJwtSecret,
+        expiresIn: '1h',
+      });
+
+      return { access_token };
+    } catch (error) {
+      throw new UnauthorizedException(error.message);
     }
   }
 }
