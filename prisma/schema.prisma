@@ -24,7 +24,7 @@ model User {
 model User_refresh_token {
   cod_user_refresh_token  Int @id @default(autoincrement())
   cod_user                Int
-  regresh_token           String
+  refresh_token           String
   createdAt               DateTime @default(now()) 
 
   // Foreign key relationship

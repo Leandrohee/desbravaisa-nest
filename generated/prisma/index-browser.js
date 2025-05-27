@@ -133,7 +133,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.User_refresh_tokenScalarFieldEnum = {
   cod_user_refresh_token: 'cod_user_refresh_token',
   cod_user: 'cod_user',
-  regresh_token: 'regresh_token',
+  refresh_token: 'refresh_token',
   createdAt: 'createdAt'
 };
 

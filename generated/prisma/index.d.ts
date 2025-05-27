@@ -2145,21 +2145,21 @@ export namespace Prisma {
   export type User_refresh_tokenMinAggregateOutputType = {
     cod_user_refresh_token: number | null
     cod_user: number | null
-    regresh_token: string | null
+    refresh_token: string | null
     createdAt: Date | null
   }
 
   export type User_refresh_tokenMaxAggregateOutputType = {
     cod_user_refresh_token: number | null
     cod_user: number | null
-    regresh_token: string | null
+    refresh_token: string | null
     createdAt: Date | null
   }
 
   export type User_refresh_tokenCountAggregateOutputType = {
     cod_user_refresh_token: number
     cod_user: number
-    regresh_token: number
+    refresh_token: number
     createdAt: number
     _all: number
   }
@@ -2178,21 +2178,21 @@ export namespace Prisma {
   export type User_refresh_tokenMinAggregateInputType = {
     cod_user_refresh_token?: true
     cod_user?: true
-    regresh_token?: true
+    refresh_token?: true
     createdAt?: true
   }
 
   export type User_refresh_tokenMaxAggregateInputType = {
     cod_user_refresh_token?: true
     cod_user?: true
-    regresh_token?: true
+    refresh_token?: true
     createdAt?: true
   }
 
   export type User_refresh_tokenCountAggregateInputType = {
     cod_user_refresh_token?: true
     cod_user?: true
-    regresh_token?: true
+    refresh_token?: true
     createdAt?: true
     _all?: true
   }
@@ -2286,7 +2286,7 @@ export namespace Prisma {
   export type User_refresh_tokenGroupByOutputType = {
     cod_user_refresh_token: number
     cod_user: number
-    regresh_token: string
+    refresh_token: string
     createdAt: Date
     _count: User_refresh_tokenCountAggregateOutputType | null
     _avg: User_refresh_tokenAvgAggregateOutputType | null
@@ -2312,7 +2312,7 @@ export namespace Prisma {
   export type User_refresh_tokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     cod_user_refresh_token?: boolean
     cod_user?: boolean
-    regresh_token?: boolean
+    refresh_token?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_refresh_token"]>
@@ -2320,7 +2320,7 @@ export namespace Prisma {
   export type User_refresh_tokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     cod_user_refresh_token?: boolean
     cod_user?: boolean
-    regresh_token?: boolean
+    refresh_token?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_refresh_token"]>
@@ -2328,7 +2328,7 @@ export namespace Prisma {
   export type User_refresh_tokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     cod_user_refresh_token?: boolean
     cod_user?: boolean
-    regresh_token?: boolean
+    refresh_token?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_refresh_token"]>
@@ -2336,11 +2336,11 @@ export namespace Prisma {
   export type User_refresh_tokenSelectScalar = {
     cod_user_refresh_token?: boolean
     cod_user?: boolean
-    regresh_token?: boolean
+    refresh_token?: boolean
     createdAt?: boolean
   }
 
-  export type User_refresh_tokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"cod_user_refresh_token" | "cod_user" | "regresh_token" | "createdAt", ExtArgs["result"]["user_refresh_token"]>
+  export type User_refresh_tokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"cod_user_refresh_token" | "cod_user" | "refresh_token" | "createdAt", ExtArgs["result"]["user_refresh_token"]>
   export type User_refresh_tokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2359,7 +2359,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       cod_user_refresh_token: number
       cod_user: number
-      regresh_token: string
+      refresh_token: string
       createdAt: Date
     }, ExtArgs["result"]["user_refresh_token"]>
     composites: {}
@@ -2787,7 +2787,7 @@ export namespace Prisma {
   interface User_refresh_tokenFieldRefs {
     readonly cod_user_refresh_token: FieldRef<"User_refresh_token", 'Int'>
     readonly cod_user: FieldRef<"User_refresh_token", 'Int'>
-    readonly regresh_token: FieldRef<"User_refresh_token", 'String'>
+    readonly refresh_token: FieldRef<"User_refresh_token", 'String'>
     readonly createdAt: FieldRef<"User_refresh_token", 'DateTime'>
   }
     
@@ -3233,7 +3233,7 @@ export namespace Prisma {
   export const User_refresh_tokenScalarFieldEnum: {
     cod_user_refresh_token: 'cod_user_refresh_token',
     cod_user: 'cod_user',
-    regresh_token: 'regresh_token',
+    refresh_token: 'refresh_token',
     createdAt: 'createdAt'
   };
 
@@ -3401,7 +3401,7 @@ export namespace Prisma {
     NOT?: User_refresh_tokenWhereInput | User_refresh_tokenWhereInput[]
     cod_user_refresh_token?: IntFilter<"User_refresh_token"> | number
     cod_user?: IntFilter<"User_refresh_token"> | number
-    regresh_token?: StringFilter<"User_refresh_token"> | string
+    refresh_token?: StringFilter<"User_refresh_token"> | string
     createdAt?: DateTimeFilter<"User_refresh_token"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -3409,7 +3409,7 @@ export namespace Prisma {
   export type User_refresh_tokenOrderByWithRelationInput = {
     cod_user_refresh_token?: SortOrder
     cod_user?: SortOrder
-    regresh_token?: SortOrder
+    refresh_token?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -3420,7 +3420,7 @@ export namespace Prisma {
     OR?: User_refresh_tokenWhereInput[]
     NOT?: User_refresh_tokenWhereInput | User_refresh_tokenWhereInput[]
     cod_user?: IntFilter<"User_refresh_token"> | number
-    regresh_token?: StringFilter<"User_refresh_token"> | string
+    refresh_token?: StringFilter<"User_refresh_token"> | string
     createdAt?: DateTimeFilter<"User_refresh_token"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "cod_user_refresh_token">
@@ -3428,7 +3428,7 @@ export namespace Prisma {
   export type User_refresh_tokenOrderByWithAggregationInput = {
     cod_user_refresh_token?: SortOrder
     cod_user?: SortOrder
-    regresh_token?: SortOrder
+    refresh_token?: SortOrder
     createdAt?: SortOrder
     _count?: User_refresh_tokenCountOrderByAggregateInput
     _avg?: User_refresh_tokenAvgOrderByAggregateInput
@@ -3443,7 +3443,7 @@ export namespace Prisma {
     NOT?: User_refresh_tokenScalarWhereWithAggregatesInput | User_refresh_tokenScalarWhereWithAggregatesInput[]
     cod_user_refresh_token?: IntWithAggregatesFilter<"User_refresh_token"> | number
     cod_user?: IntWithAggregatesFilter<"User_refresh_token"> | number
-    regresh_token?: StringWithAggregatesFilter<"User_refresh_token"> | string
+    refresh_token?: StringWithAggregatesFilter<"User_refresh_token"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User_refresh_token"> | Date | string
   }
 
@@ -3519,7 +3519,7 @@ export namespace Prisma {
   }
 
   export type User_refresh_tokenCreateInput = {
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutRefreshTokensInput
   }
@@ -3527,12 +3527,12 @@ export namespace Prisma {
   export type User_refresh_tokenUncheckedCreateInput = {
     cod_user_refresh_token?: number
     cod_user: number
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
   }
 
   export type User_refresh_tokenUpdateInput = {
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutRefreshTokensNestedInput
   }
@@ -3540,26 +3540,26 @@ export namespace Prisma {
   export type User_refresh_tokenUncheckedUpdateInput = {
     cod_user_refresh_token?: IntFieldUpdateOperationsInput | number
     cod_user?: IntFieldUpdateOperationsInput | number
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type User_refresh_tokenCreateManyInput = {
     cod_user_refresh_token?: number
     cod_user: number
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
   }
 
   export type User_refresh_tokenUpdateManyMutationInput = {
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type User_refresh_tokenUncheckedUpdateManyInput = {
     cod_user_refresh_token?: IntFieldUpdateOperationsInput | number
     cod_user?: IntFieldUpdateOperationsInput | number
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3742,7 +3742,7 @@ export namespace Prisma {
   export type User_refresh_tokenCountOrderByAggregateInput = {
     cod_user_refresh_token?: SortOrder
     cod_user?: SortOrder
-    regresh_token?: SortOrder
+    refresh_token?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3754,14 +3754,14 @@ export namespace Prisma {
   export type User_refresh_tokenMaxOrderByAggregateInput = {
     cod_user_refresh_token?: SortOrder
     cod_user?: SortOrder
-    regresh_token?: SortOrder
+    refresh_token?: SortOrder
     createdAt?: SortOrder
   }
 
   export type User_refresh_tokenMinOrderByAggregateInput = {
     cod_user_refresh_token?: SortOrder
     cod_user?: SortOrder
-    regresh_token?: SortOrder
+    refresh_token?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3983,13 +3983,13 @@ export namespace Prisma {
   }
 
   export type User_refresh_tokenCreateWithoutUserInput = {
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
   }
 
   export type User_refresh_tokenUncheckedCreateWithoutUserInput = {
     cod_user_refresh_token?: number
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
   }
 
@@ -4025,7 +4025,7 @@ export namespace Prisma {
     NOT?: User_refresh_tokenScalarWhereInput | User_refresh_tokenScalarWhereInput[]
     cod_user_refresh_token?: IntFilter<"User_refresh_token"> | number
     cod_user?: IntFilter<"User_refresh_token"> | number
-    regresh_token?: StringFilter<"User_refresh_token"> | string
+    refresh_token?: StringFilter<"User_refresh_token"> | string
     createdAt?: DateTimeFilter<"User_refresh_token"> | Date | string
   }
 
@@ -4085,24 +4085,24 @@ export namespace Prisma {
 
   export type User_refresh_tokenCreateManyUserInput = {
     cod_user_refresh_token?: number
-    regresh_token: string
+    refresh_token: string
     createdAt?: Date | string
   }
 
   export type User_refresh_tokenUpdateWithoutUserInput = {
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type User_refresh_tokenUncheckedUpdateWithoutUserInput = {
     cod_user_refresh_token?: IntFieldUpdateOperationsInput | number
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type User_refresh_tokenUncheckedUpdateManyWithoutUserInput = {
     cod_user_refresh_token?: IntFieldUpdateOperationsInput | number
-    regresh_token?: StringFieldUpdateOperationsInput | string
+    refresh_token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
