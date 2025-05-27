@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Request } from 'express';
 
 @Injectable()
 export class TestApiService {
@@ -10,17 +11,20 @@ export class TestApiService {
     }
   }
 
-  async getCat() {
+  async getCat(req: Request) {
     try {
-      return 'This is a cat';
+      console.log(req.user);
+      return req.user;
     } catch (error) {
       return error;
     }
   }
 
-  async getDog() {
+  async getDog(body: any) {
     try {
-      return 'This is a dog';
+      console.log(body);
+      return body;
+      // return 'This is a dog';
     } catch (error) {
       return error;
     }

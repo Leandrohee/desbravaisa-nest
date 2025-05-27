@@ -7,7 +7,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 interface ValidateProps {
   sub: string;
-  email: String;
+  email: string;
   iat: string;
   exp: string;
 }
@@ -20,11 +20,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false, // this will trigger error if expired
       secretOrKey: process.env.JWT_SECRET || '',
-      passReqToCallback: true, // enables access to raw token
     });
   }
 
-  //Validating and returning the payload in every res router
+  //THis payload como from the jwt
   async validate(payload: ValidateProps): Promise<ValidateProps> {
     //Returning the payload
     return {
@@ -35,3 +34,18 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     };
   }
 }
+
+/**
+ * The validate method inject date related to the user to the request
+ *
+ * The retrieve this date, use the method get from express like this:
+ *
+ * @Get()
+ * @useGuards(JwtGuard)
+ * cat(@Req() res: Request){
+ *  return this.testapi.getcat(req.user)
+ * }
+ *
+ *
+ * The 'req.user' is the data from validate
+ */

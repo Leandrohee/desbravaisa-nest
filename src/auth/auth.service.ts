@@ -83,25 +83,32 @@ export class AuthService {
   private async gentoken({
     email,
     codUser,
-  }: GentokenTypes): Promise<{ access_token: string }> {
+  }: GentokenTypes): Promise<{ access_token: string; refresh_token: string }> {
     const payload = {
       sub: codUser, //sub is a convention name in Jwt for a unique value, in this case the user id
       email: email,
     };
+    const jwtSecret = process.env.JWT_SECRET;
+    const refreshJwtSecret = process.env.REFRESH_JWT_SECRET;
 
     try {
       //Loading the jwt secret from the env
-      const jwtSecret = process.env.JWT_SECRET;
       if (!jwtSecret) throw new Error('Secret not found!');
+      if (!refreshJwtSecret) throw new Error('Refresh secret not found!');
 
-      //Generating and storing the jwt token
-      const token = await this.jwt.signAsync(payload, {
+      //Generating and storing the jwt acess_token and refresh_token
+      const access_token = await this.jwt.signAsync(payload, {
         secret: jwtSecret,
-        expiresIn: '1h',
+        expiresIn: '60s',
+      });
+
+      const refresh_token = await this.jwt.signAsync(payload, {
+        secret: refreshJwtSecret,
+        expiresIn: '7d',
       });
 
       //Returning the generate token
-      return { access_token: token };
+      return { access_token, refresh_token };
     } catch (error) {
       throw new ForbiddenException(error.message);
     }

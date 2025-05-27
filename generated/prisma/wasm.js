@@ -130,6 +130,13 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName'
 };
 
+exports.Prisma.User_refresh_tokenScalarFieldEnum = {
+  cod_user_refresh_token: 'cod_user_refresh_token',
+  cod_user: 'cod_user',
+  regresh_token: 'regresh_token',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -147,7 +154,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  User_refresh_token: 'User_refresh_token'
 };
 
 /**

@@ -16,4 +16,17 @@ model User {
   hash      String
   firstName String
   lastName  String?
+
+  // Relation to User_refresh_token
+  refreshTokens User_refresh_token[]
+}
+
+model User_refresh_token {
+  cod_user_refresh_token Int      @id @default(autoincrement())
+  cod_user               Int
+  regresh_token          String
+  createdAt              DateTime @default(now())
+
+  // Foreign key relationship
+  user User @relation(fields: [cod_user], references: [cod_user])
 }

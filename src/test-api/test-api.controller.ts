@@ -1,6 +1,7 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { TestApiService } from './test-api.service';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { Request } from 'express';
 
 @Controller('test-api')
 export class TestApiController {
@@ -15,13 +16,14 @@ export class TestApiController {
   //Route localhost:3000/test-api/cat
   @UseGuards(JwtGuard)
   @Get('cat')
-  getCat() {
-    return this.testapiservice.getCat();
+  getCat(@Req() req: Request) {
+    return this.testapiservice.getCat(req);
   }
 
   //Route localhost:3000/test-api/dog
+  @UseGuards(JwtGuard)
   @Get('dog')
-  getDog() {
-    return this.testapiservice.getDog();
+  getDog(@Body() body: any) {
+    return this.testapiservice.getDog(body);
   }
 }
