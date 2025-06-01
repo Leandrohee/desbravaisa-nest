@@ -22,11 +22,13 @@ export class TestApiService {
 
   async getDog(body: any) {
     try {
-      console.log(body);
-      return body;
-      // return 'This is a dog';
+      return 'This is a dog';
     } catch (error) {
       return error;
     }
+  }
+
+  async getPig() {
+    return 'This is a pig';
   }
 }

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { TestApiService } from './test-api.service';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { JwtCookieGuard } from 'src/auth/guard/jwt-cookie.guard';
 import { Request } from 'express';
 
 @Controller('test-api')
@@ -25,5 +26,12 @@ export class TestApiController {
   @Get('dog')
   getDog(@Body() body: any) {
     return this.testapiservice.getDog(body);
+  }
+
+  //Route localhost:3000/test-api/pig
+  @UseGuards(JwtCookieGuard)
+  @Get('pig')
+  getPig() {
+    return 'This is a pig';
   }
 }

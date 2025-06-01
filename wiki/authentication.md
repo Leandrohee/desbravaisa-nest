@@ -3,7 +3,8 @@
 1. Create the route for login the user and the dto related to user
 2. Create the logic to generate the jwt once the user is verify and return to the front end
 3. Store jwt in the frontend and send it in every request to the backend
-4.
+4. Create strategy and guard for authenticate the acess_token
+5. Working with refresh_token create: (route, method, guard and strategy). All related to refresh_token.
 
 ## 1. Creating the route for login the user
 
@@ -268,4 +269,45 @@ import { JwtStrategy } from './strategy/jwt.strategy';
   controllers: [AuthController],
 })
 export class AuthModule {}
+```
+
+## 5. Adding refresh_token
+
+The refresh_token is a long-lived token that takes longer to expires in comparasion to the access_token. When the access_token expires the refresh_token generate a new one.
+
+5.1 - Create route for the refresh method
+
+This route is protected by a expecific guard and strategy only for refresh token. It is differente from the normal jwtGuard that is set up to work with access_tokens.
+
+```ts
+//Route localhost:3000/auth/refresh
+@UseGuards(RefreshJwtGuard)
+@Post('refresh')
+refresh(@Req() req: Request) {
+  return this.authservice.refresh(req);
+}
+```
+
+5.2 - Creating the method for dealing with the logic to generate and return the new access_token.
+
+```ts
+async refresh(req: Request) {
+  //This payload is coming from refreshjwtstrategy
+  const refreshJwtSecret = process.env.REFRESH_JWT_SECRET;
+  const payload = req.user ?? '';
+
+  try {
+    if (!refreshJwtSecret) throw new Error('Secret not found');
+
+    //Generating and storing the jwt acess_token and refresh_token
+    const access_token = await this.jwt.signAsync(payload, {
+      secret: refreshJwtSecret,
+      expiresIn: '1h',
+    });
+
+    return { access_token };
+  } catch (error) {
+    throw new UnauthorizedException(error.message);
+  }
+}
 ```

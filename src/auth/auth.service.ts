@@ -12,7 +12,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaClientKnownRequestError } from 'generated/prisma/runtime/library';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   /* ---------------------- METHOD RELATED TO AUTHENTICATED A EXISTENT USER --------------------- */
-  async signin(dto: SigninDto) {
+  async signin(dto: SigninDto, res: Response) {
     try {
       //Verify is the user exists
       const user = await this.prisma.user.findUnique({
@@ -83,7 +83,22 @@ export class AuthService {
         },
       });
 
-      return tokensGenerated;
+      //Setting cookies in the response
+      res.cookie('access_token', tokensGenerated.access_token, {
+        httpOnly: true,
+        secure: false, //Use false in http and true for https
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000, // 1h
+      });
+
+      res.cookie('refresh_token', tokensGenerated.refresh_token, {
+        httpOnly: true,
+        secure: false, //Use false in http and true for https
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+      });
+
+      return { msg: 'Login successful' };
     } catch (error) {
       // throw new ForbiddenException(error.message); //Error 403 -> Server know who i'm
       throw new UnauthorizedException(error.message); //Error 401 -> Server dont know who i'm
@@ -162,6 +177,8 @@ export class AuthService {
     "firstName": "Leandro",
     "lastName": "Torres"
   }
+
+  Headers: Authorization      Bearer eyJhbGciOiJIUzI1NiIsInR...
 
   The quotation marks has to be doubled and not simplet 
   ✅ ""
