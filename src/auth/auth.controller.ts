@@ -2,7 +2,7 @@ import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SigninDto, SignupDto } from './dto/authPayload.dto';
 import { Request, Response } from 'express';
-import { RefreshJwtGuard } from './guard/refreshjwt.guard';
+import { RefreshJwtCookieGuard } from './guard/refreshjwt-cookie.guard';
 
 //Route localhost:3000/auth
 @Controller('auth')
@@ -22,10 +22,10 @@ export class AuthController {
   }
 
   //Route localhost:3000/auth/refresh
-  @UseGuards(RefreshJwtGuard)
+  @UseGuards(RefreshJwtCookieGuard)
   @Post('refresh')
-  refresh(@Req() req: Request) {
-    return this.authservice.refresh(req);
+  refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    return this.authservice.refresh(req, res);
   }
 }
 

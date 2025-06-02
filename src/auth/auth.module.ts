@@ -6,10 +6,17 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { RefreshJwtStrategy } from './strategy/refreshjwt.strategy';
 import { JwtCookieStrategy } from './strategy/jwt-cookies.strategy';
+import { RefreshJwtCookieStrategy } from './strategy/refreshjwt-cookies.strategy';
 
 @Module({
   imports: [PrismaModule, JwtModule.register({})], //Importing JwtModule here to use in this module
-  providers: [AuthService, JwtStrategy, RefreshJwtStrategy, JwtCookieStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    RefreshJwtStrategy,
+    JwtCookieStrategy,
+    RefreshJwtCookieStrategy,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

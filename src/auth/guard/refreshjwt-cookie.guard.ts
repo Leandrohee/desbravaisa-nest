@@ -1,8 +1,8 @@
 /**
  *
- * This guard works with the jwt-cookie strategy
+ * This guard works with the refreshjwt-cookie strategy
  *
- * The name 'jwt-cookie' has to be the same as in jwtCookieStrategy
+ * The name 'refreshjwt-cookie' has to be the same as in RefreshjwtCookieStrategy
  */
 
 import {
@@ -13,7 +13,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class JwtCookieGuard extends AuthGuard('jwt-cookie') {
+export class RefreshJwtCookieGuard extends AuthGuard('refreshjwt-cookie') {
   //This function is the midlleware between the strategy and the method in the service. eg: auth.service
   handleRequest<TUser = any>(
     err: any,
@@ -36,7 +36,7 @@ export class JwtCookieGuard extends AuthGuard('jwt-cookie') {
 /**
  * Testing this guard in this route:
  *
- * http://localhost:3000/test-api/pig
+ * http://localhost:3000/auth/refresh
  *
  *
  */

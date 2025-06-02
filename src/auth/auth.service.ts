@@ -88,7 +88,8 @@ export class AuthService {
         httpOnly: true,
         secure: false, //Use false in http and true for https
         sameSite: 'lax',
-        maxAge: 60 * 60 * 1000, // 1h
+        // maxAge: 60 * 60 * 1000, // 1h
+        maxAge: 1 * 30 * 1000, // 30s
       });
 
       res.cookie('refresh_token', tokensGenerated.refresh_token, {
@@ -141,21 +142,28 @@ export class AuthService {
   }
 
   /* ---------------------------- METHOD TO GENERATE A NEW ACCESS_TOKEN --------------------------- */
-  async refresh(req: Request) {
+  async refresh(req: Request, res: Response) {
     //This payload is coming from refreshjwtstrategy
-    const refreshJwtSecret = process.env.REFRESH_JWT_SECRET;
+    const jwtSecret = process.env.JWT_SECRET;
     const payload = req.user ?? '';
 
     try {
-      if (!refreshJwtSecret) throw new Error('Secret not found');
+      if (!jwtSecret) throw new Error('Secret not found');
 
       //Generating and storing the jwt acess_token and refresh_token
       const access_token = await this.jwt.signAsync(payload, {
-        secret: refreshJwtSecret,
+        secret: jwtSecret,
         expiresIn: '1h',
       });
 
-      return { access_token };
+      res.cookie('access_token', access_token, {
+        httpOnly: true,
+        secure: false, //Use false in http and true for https
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000, // 1h
+      });
+
+      return { msg: 'token generated successfuly' };
     } catch (error) {
       throw new UnauthorizedException(error.message);
     }

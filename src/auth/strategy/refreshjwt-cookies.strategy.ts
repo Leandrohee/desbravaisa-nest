@@ -16,39 +16,35 @@ import { Strategy } from 'passport-jwt';
 interface ValidateProps {
   sub: string;
   email: string;
-  iat: string;
-  exp: string;
 }
 
 //Creating a custom extractor to get the jwt from cookies
 const extractJwtFromCookie = (req: Request) => {
   let token = null;
   if (req && req.cookies) {
-    token = req.cookies['access_token'];
+    token = req.cookies['refresh_token'];
   }
   return token;
 };
 
 @Injectable()
-export class JwtCookieStrategy extends PassportStrategy(
+export class RefreshJwtCookieStrategy extends PassportStrategy(
   Strategy,
-  'jwt-cookie',
+  'refreshjwt-cookie',
 ) {
   constructor() {
     super({
-      jwtFromRequest: extractJwtFromCookie, //Using the custom extractor
+      jwtFromRequest: extractJwtFromCookie,
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || '',
+      secretOrKey: process.env.REFRESH_JWT_SECRET || '',
     });
   }
 
-  //This payload came from the jwt extracted from cookies is pass to user in Req.user
+  //This payload came from the jwt extracter from cookies is pass to user in Req.user
   async validate(payload: ValidateProps): Promise<ValidateProps> {
     return {
       sub: payload.sub,
       email: payload.email,
-      iat: new Date(Number(payload.iat) * 1000).toLocaleTimeString(), //transforming the Unix timestamp to a time in my local time
-      exp: new Date(Number(payload.exp) * 1000).toLocaleTimeString(), //transforming the Unix timestamp to a time in my local time
     };
   }
 }
