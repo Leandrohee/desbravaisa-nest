@@ -4,6 +4,9 @@
 
 Use the documentation website: https://docs.nestjs.com/first-steps
 
+1. nest new nest_test
+2. yarn
+
 # Cleaning the main folder
 
 Delete this files, because you will not need them in the begining
@@ -28,6 +31,8 @@ You can also generate modules automaticly with the command:
 
 ```bash
 nest g module nameofthemodule
+nest g service test_api
+nest g controller test_api
 ```
 
 # Controllers information
